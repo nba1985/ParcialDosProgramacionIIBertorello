@@ -1,0 +1,186 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #eef3f7;
+}
+
+header {
+  background: linear-gradient(135deg, #2477b3, #37b37e);
+  color: white;
+  text-align: center;
+  padding: 40px;
+}
+
+nav {
+  background-color: #15527d;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding: 15px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+main {
+  width: 90%;
+  max-width: 1000px;
+  margin: 30px auto;
+}
+
+.hero,
+.panel {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+.hero {
+  text-align: center;
+  border-left: 6px solid #37b37e;
+}
+
+h2 {
+  color: #2477b3;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input,
+select,
+button {
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+input,
+select {
+  border: 1px solid #ccc;
+}
+
+button {
+  background-color: #2477b3;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #15527d;
+  transform: scale(1.03);
+}
+
+#mensaje {
+  text-align: center;
+  font-weight: bold;
+}
+
+.ok {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.galeria {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.tarjeta {
+  width: 240px;
+  background: #f8fbff;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  border-top: 5px solid #2477b3;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  transition: 0.3s;
+}
+
+.tarjeta:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+}
+
+.activo {
+  color: green;
+  font-weight: bold;
+}
+
+.inactivo {
+  color: red;
+  font-weight: bold;
+}
+
+.sin-resultados {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  color: #555;
+}
+
+.eliminar {
+  margin-top: 10px;
+  background-color: #b3261e;
+}
+
+.eliminar:hover {
+  background-color: #7d1611;
+}
+
+footer {
+  background-color: #15527d;
+  color: white;
+  text-align: center;
+  padding: 18px;
+  margin-top: 30px;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #2477b3;
+  box-shadow: 0 0 5px rgba(36, 119, 179, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .acciones {
+    flex-direction: column;
+  }
+
+  .tarjeta {
+    width: 90%;
+  }
+}
