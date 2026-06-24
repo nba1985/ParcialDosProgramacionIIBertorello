@@ -18,6 +18,10 @@ nav {
   gap: 25px;
   padding: 15px;
   flex-wrap: wrap;
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 nav a {
@@ -169,8 +173,39 @@ select:focus {
   box-shadow: 0 0 5px rgba(36, 119, 179, 0.5);
 }
 
-/* Responsive */
+/* ESTADISTICAS */
+
+.estadisticas {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.caja-estadistica {
+  width: 220px;
+  background-color: #f8fbff;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  border-top: 5px solid #37b37e;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.caja-estadistica h3 {
+  font-size: 32px;
+  color: #2477b3;
+  margin: 0;
+}
+
+.caja-estadistica p {
+  font-weight: bold;
+}
+
+/* RESPONSIVE */
+
 @media (max-width: 768px) {
+
   nav {
     flex-direction: column;
     text-align: center;
@@ -183,4 +218,9 @@ select:focus {
   .tarjeta {
     width: 90%;
   }
+
+  .caja-estadistica {
+    width: 90%;
+  }
+
 }

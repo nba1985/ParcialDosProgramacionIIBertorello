@@ -14,6 +14,10 @@ const btnTodos = document.querySelector("#btnTodos");
 const btnActivos = document.querySelector("#btnActivos");
 const btnConCupos = document.querySelector("#btnConCupos");
 
+const totalCursos = document.querySelector("#totalCursos");
+const cursosActivos = document.querySelector("#cursosActivos");
+const cursosInactivos = document.querySelector("#cursosInactivos");
+
 let cursosActuales = [];
 
 async function cargarCursos() {
@@ -31,6 +35,25 @@ async function cargarCursos() {
   } catch (error) {
     mensaje.textContent = "No se pudo conectar con la API.";
     mensaje.className = "error";
+  }
+}
+
+async function cargarEstadisticas() {
+  try {
+    const respuesta = await fetch(`${API_URL}/estadisticas/general`);
+
+    if (!respuesta.ok) {
+      throw new Error("Error estadísticas");
+    }
+
+    const datos = await respuesta.json();
+
+    totalCursos.textContent = datos.totalCursos;
+    cursosActivos.textContent = datos.cursosActivos;
+    cursosInactivos.textContent = datos.cursosInactivos;
+
+  } catch (error) {
+    console.error(error);
   }
 }
 
@@ -54,6 +77,11 @@ function mostrarCursos(cursos) {
         <p><strong>Duración:</strong> ${curso.Duracion} horas</p>
         <p><strong>Cupos:</strong> ${curso.CuposDisponibles}</p>
         <p class="${claseActivo}">${textoActivo}</p>
+
+        <button onclick="cambiarEstadoCurso(${curso.Id})">
+          Cambiar estado
+        </button>
+
         <button class="eliminar" onclick="eliminarCurso(${curso.Id})">
           Eliminar
         </button>
@@ -98,7 +126,9 @@ async function guardarCurso(evento) {
     mensaje.textContent = "Curso guardado correctamente.";
     mensaje.className = "ok";
     formulario.reset();
+
     cargarCursos();
+    cargarEstadisticas();
 
   } catch (error) {
     mensaje.textContent = "Error al guardar el curso.";
@@ -118,10 +148,34 @@ async function eliminarCurso(id) {
 
     mensaje.textContent = "Curso eliminado correctamente.";
     mensaje.className = "ok";
+
     cargarCursos();
+    cargarEstadisticas();
 
   } catch (error) {
     mensaje.textContent = "Error al eliminar el curso.";
+    mensaje.className = "error";
+  }
+}
+
+async function cambiarEstadoCurso(id) {
+  try {
+    const respuesta = await fetch(`${API_URL}/${id}/estado`, {
+      method: "PUT"
+    });
+
+    if (!respuesta.ok) {
+      throw new Error("Error al actualizar estado");
+    }
+
+    mensaje.textContent = "Estado actualizado correctamente.";
+    mensaje.className = "ok";
+
+    cargarCursos();
+    cargarEstadisticas();
+
+  } catch (error) {
+    mensaje.textContent = "Error al actualizar el estado.";
     mensaje.className = "error";
   }
 }
@@ -147,9 +201,13 @@ function mostrarConCupos() {
 }
 
 formulario.addEventListener("submit", guardarCurso);
-btnCargar.addEventListener("click", cargarCursos);
+btnCargar.addEventListener("click", () => {
+  cargarCursos();
+  cargarEstadisticas();
+});
 btnTodos.addEventListener("click", mostrarTodos);
 btnActivos.addEventListener("click", mostrarActivos);
 btnConCupos.addEventListener("click", mostrarConCupos);
 
 cargarCursos();
+cargarEstadisticas();

@@ -110,9 +110,65 @@ const eliminarCurso = async (req, res) => {
   }
 };
 
+const obtenerEstadisticas = async (req, res) => {
+  try {
+    const pool = await getConnection();
+
+    const result = await pool.request().query(`
+      SELECT 
+        COUNT(*) AS totalCursos,
+        SUM(CASE WHEN Activo = 1 THEN 1 ELSE 0 END) AS cursosActivos,
+        SUM(CASE WHEN Activo = 0 THEN 1 ELSE 0 END) AS cursosInactivos
+      FROM Cursos
+    `);
+
+    res.json(result.recordset[0]);
+  } catch (error) {
+    res.status(500).json({
+      mensaje: "Error al obtener estadísticas",
+      error: error.message
+    });
+  }
+};
+
+const actualizarEstadoCurso = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const pool = await getConnection();
+
+    const result = await pool.request()
+      .input("Id", sql.Int, id)
+      .query(`
+        UPDATE Cursos
+        SET Activo = CASE 
+          WHEN Activo = 1 THEN 0 
+          ELSE 1 
+        END
+        WHERE Id = @Id
+      `);
+
+    if (result.rowsAffected[0] === 0) {
+      return res.status(404).json({
+        mensaje: "Curso no encontrado"
+      });
+    }
+
+    res.json({
+      mensaje: "Estado del curso actualizado correctamente"
+    });
+  } catch (error) {
+    res.status(500).json({
+      mensaje: "Error al actualizar el estado",
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   obtenerCursos,
   obtenerCursoPorId,
   registrarCurso,
-  eliminarCurso
+  eliminarCurso,
+  obtenerEstadisticas,
+  actualizarEstadoCurso
 };
